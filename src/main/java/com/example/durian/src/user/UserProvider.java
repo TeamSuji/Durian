@@ -1,5 +1,8 @@
 package com.example.durian.src.user;
 
+import com.example.durian.config.BaseException;
+import com.example.durian.config.BaseResponseStatus;
+import com.example.durian.src.user.model.GetUserRes;
 import com.example.durian.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,5 +20,14 @@ public class UserProvider {
     public UserProvider(UserDao userDao, JwtService jwtService) {
         this.userDao = userDao;
         this.jwtService = jwtService;
+    }
+
+    public GetUserRes getUserByIdx(int user_idx) throws BaseException {
+        try {
+            GetUserRes getUserRes = userDao.getUserInfo(user_idx);
+            return getUserRes;
+        } catch (Exception exception) {
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
     }
 }
